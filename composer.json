@@ -1,0 +1,35 @@
+{
+    "name": "chintanlin/laravel-geoip2",
+    "description": "The provider of geoip2 for laravel",
+    "type": "library",
+    "authors": [
+        {
+            "name": "chintanlin",
+            "email": "weal80522@hotmail.com"
+        }
+    ],
+    "require": {
+        "geoip2/geoip2": "^2.10"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.3"
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Chintanlin\\GeoIP2\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Chintanlin\\GeoIP2\\GeoIP2ServiceProvider"
+            ],
+            "aliases": {
+                "GeoIP2": "Chintanlin\\GeoIP2\\Facades\\GeoIP2"
+            }
+        }
+    }
+}
