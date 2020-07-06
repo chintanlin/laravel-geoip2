@@ -41,8 +41,14 @@ class Update extends Command
         
         $this->comment('Updating...');
 
+        $download_config = [
+            'edition_id' => 'GeoLite2-City',
+            'license_key' => env('MAXMIND_LICENSE', 'xxxx'),
+            'suffix' => 'tar.gz'
+        ];
+
         // Settings
-        $url = 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=xxxx&suffix=tar.gz';
+        $url = 'https://download.maxmind.com/app/geoip_download?'.http_build_query($download_config);
         $mmdb_path = storage_path('app/GeoLite2-City.mmdb');
 
         // Get header response
