@@ -22,12 +22,12 @@ composer require chintanlin/laravel-geoip2
 # How to use
 
 ```php
-    GeoIp::getCountry('8.8.8.8');  // Facades
-    app('geoip')->getCountry('8.8.8.8'); // Providers
-    geoip('8.8.8.8'); // helpers
+    GeoIP2::getCountry('8.8.8.8');  // Facades
+    app('geoip2')->getCountry('8.8.8.8'); // Providers
+    geoip2('8.8.8.8'); // helpers
     
     // use maxmind/GeoIP2 PHP API directly
-    $record = GeoIp::city('8.8.8.8'); 
+    $record = GeoIP2::city('8.8.8.8'); 
     $record->country->name;
 
 ```
