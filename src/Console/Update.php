@@ -3,7 +3,9 @@
 namespace Chintanlin\GeoIP2\Console;
 
 use Illuminate\Console\Command;
+use GuzzleHttp\Client;
 use PharData;
+
 
 class Update extends Command
 {
@@ -38,7 +40,7 @@ class Update extends Command
      */
     public function fire()
     {
-        
+
         $this->comment('Updating...');
 
         $download_config = [
@@ -48,7 +50,7 @@ class Update extends Command
         ];
 
         // Settings
-        $url = 'https://download.maxmind.com/app/geoip_download?'.http_build_query($download_config);
+        $url = 'https://download.maxmind.com/app/geoip_download?' . http_build_query($download_config);
         $mmdb_path = storage_path('app/GeoLite2-City.mmdb');
 
         // Get header response
@@ -64,9 +66,24 @@ class Update extends Command
         }
         mkdir($tmpFolder);
 
-        file_put_contents($tmpFolder . '/GeoLite2-City.mmdb.tar.gz', fopen($url, 'r'));
-        // Unzip and save database
+        $client = new Client();
+        $client->request(
+            'GET',
+            $url,
+            [
+                'progress' => function (
+                    $downloadTotal,
+                    $downloadedBytes,
+                    $uploadTotal,
+                    $uploadedBytes
+                ) {
+                    $this->info($downloadTotal, '/', $downloadedBytes);
+                },
+                'sink' => $tmpFolder . '/GeoLite2-City.mmdb.tar.gz',
+            ]
+        );
 
+        // Unzip and save database
         $p = new PharData($tmpFolder . '/GeoLite2-City.mmdb.tar.gz');
         $p->decompress(); // 解壓縮成 GeoLite2-City.mmdb.tar
 
