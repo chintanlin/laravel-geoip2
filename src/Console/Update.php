@@ -41,7 +41,7 @@ class Update extends Command
     public function fire()
     {
 
-        $this->comment('Updating...');
+        $this->comment('Start update');
 
         $download_config = [
             'edition_id' => 'GeoLite2-City',
@@ -66,6 +66,10 @@ class Update extends Command
         }
         mkdir($tmpFolder);
 
+        $bar = null;
+
+
+        $this->line("Downloading...");
         $client = new Client();
         $client->request(
             'GET',
@@ -76,12 +80,23 @@ class Update extends Command
                     $downloadedBytes,
                     $uploadTotal,
                     $uploadedBytes
-                ) {
-                    $this->info($downloadTotal, '/', $downloadedBytes);
+                ) use (&$bar) {
+                    if ($bar == null) {
+                        if ($downloadTotal > 0) {
+                            $bar = $this->output->createProgressBar($downloadTotal);
+                            $bar->start();
+                        }
+                    } else {
+                        $bar->setMaxSteps($downloadTotal);
+                        $bar->setProgress($downloadedBytes);
+                    }
                 },
                 'sink' => $tmpFolder . '/GeoLite2-City.mmdb.tar.gz',
             ]
         );
+        $bar->finish();
+        $this->line("");
+        $this->info("Database file ({$tmpFolder}/GeoLite2-City.mmdb.tar.gz) downloaded.");
 
         // Unzip and save database
         $p = new PharData($tmpFolder . '/GeoLite2-City.mmdb.tar.gz');
