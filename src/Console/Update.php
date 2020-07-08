@@ -66,54 +66,55 @@ class Update extends Command
         }
         mkdir($tmpFolder);
 
-        $bar = null;
-
-
-        $this->line("Downloading...");
-        $client = new Client();
-        $client->request(
-            'GET',
-            $url,
-            [
-                'progress' => function (
-                    $downloadTotal,
-                    $downloadedBytes,
-                    $uploadTotal,
-                    $uploadedBytes
-                ) use (&$bar) {
-                    if ($bar == null) {
-                        if ($downloadTotal > 0) {
-                            $bar = $this->output->createProgressBar($downloadTotal);
-                            $bar->start();
+        try {
+            $this->line("Downloading...");
+            $bar = null;
+            $client = new Client();
+            $client->request(
+                'GET',
+                $url,
+                [
+                    'progress' => function (
+                        $downloadTotal,
+                        $downloadedBytes,
+                        $uploadTotal,
+                        $uploadedBytes
+                    ) use (&$bar) {
+                        if ($bar == null) {
+                            if ($downloadTotal > 0) {
+                                $bar = $this->output->createProgressBar($downloadTotal);
+                                $bar->start();
+                            }
+                        } else {
+                            $bar->setMaxSteps($downloadTotal);
+                            $bar->setProgress($downloadedBytes);
                         }
-                    } else {
-                        $bar->setMaxSteps($downloadTotal);
-                        $bar->setProgress($downloadedBytes);
-                    }
-                },
-                'sink' => $tmpFolder . '/GeoLite2-City.mmdb.tar.gz',
-            ]
-        );
-        $bar->finish();
-        $this->line("");
-        $this->info("Database file ({$tmpFolder}/GeoLite2-City.mmdb.tar.gz) downloaded.");
+                    },
+                    'sink' => $tmpFolder . '/GeoLite2-City.mmdb.tar.gz',
+                ]
+            );
+            $bar->finish();
+            $this->line("");
+            $this->info("Database file ({$tmpFolder}/GeoLite2-City.mmdb.tar.gz) downloaded.");
 
-        // Unzip and save database
-        $p = new PharData($tmpFolder . '/GeoLite2-City.mmdb.tar.gz');
-        $p->decompress(); // 解壓縮成 GeoLite2-City.mmdb.tar
+            // Unzip and save database
+            $p = new PharData($tmpFolder . '/GeoLite2-City.mmdb.tar.gz');
+            $p->decompress(); // 解壓縮成 GeoLite2-City.mmdb.tar
 
-        // unarchive from the tar
-        $phar = new PharData($tmpFolder . '/GeoLite2-City.mmdb.tar');
-        $dir = $phar->current()->getPathname();
-        $dir = basename($dir);
+            // unarchive from the tar
+            $phar = new PharData($tmpFolder . '/GeoLite2-City.mmdb.tar');
+            $dir = $phar->current()->getPathname();
+            $dir = basename($dir);
 
-        $phar->extractTo($tmpFolder, $dir . '/GeoLite2-City.mmdb', true); // 解開檔案到 path
-        rename($tmpFolder . '/' . $dir . '/GeoLite2-City.mmdb', $mmdb_path);
-        // Remove temp file
-        @unlink($tmpFolder . '/GeoLite2-City.mmdb.tar.gz');
-        @unlink($tmpFolder . '/GeoLite2-City.mmdb.tar');
-        @rmdir($tmpFolder . '/' . $dir);
-        @rmdir($tmpFolder);
-        $this->info("Database file ({$mmdb_path}) updated.");
+            $phar->extractTo($tmpFolder, $dir . '/GeoLite2-City.mmdb', true); // 解開檔案到 path
+            rename($tmpFolder . '/' . $dir . '/GeoLite2-City.mmdb', $mmdb_path);
+            $this->info("Database file ({$mmdb_path}) updated.");
+        } finally {
+            // Remove temp file
+            @unlink($tmpFolder . '/GeoLite2-City.mmdb.tar.gz');
+            @unlink($tmpFolder . '/GeoLite2-City.mmdb.tar');
+            @rmdir($tmpFolder . '/' . $dir);
+            @rmdir($tmpFolder);
+        }
     }
 }
