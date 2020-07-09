@@ -1,22 +1,8 @@
 # laravel-geoip2
 GeoIP2 for Laravel
 
-# First
-composer.json add the content
-
-```json
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/chintanlin/laravel-geoip2"
-        }
-    ]
-```    
-# Install
-
 ```bash
 composer require chintanlin/laravel-geoip2
-
 ```
 
 # How to use
