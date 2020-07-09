@@ -2,6 +2,7 @@
     "name": "chintanlin/laravel-geoip2",
     "description": "The provider of geoip2 for laravel",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "chintanlin",
