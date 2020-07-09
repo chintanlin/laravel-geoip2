@@ -38,8 +38,8 @@ Database file store at storage_path('app/GeoLite2-City.mmdb')
 
 ex : Laravel/storage/app/GeoLite2-City.mmdb
 
-You should use your private license key in src/Console/Update.php (license_key=xxxx)
+You should use your private license key in .env (MAXMIND_LICENSE=xxxx)
 
 ``` bash
-    php artisan geoip:update;
+    php artisan geoip2:update;
 ```
