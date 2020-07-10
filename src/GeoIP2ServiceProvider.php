@@ -15,7 +15,11 @@ class GeoIP2ServiceProvider extends ServiceProvider
     {
         //
         $this->app->singleton('geoip2', function ($app) {
-            return new GeoIP2(storage_path('app/GeoLite2-City.mmdb'));
+            if (file_exists(storage_path('app/GeoLite2-City.mmdb'))) {
+                return new GeoIP2(storage_path('app/GeoLite2-City.mmdb'));
+            } else {
+                return new GeoIP2(__DIR__ . '/../tests/GeoIP2-City-Test.mmdb');
+            }
         });
 
         if ($this->app->runningInConsole()) {

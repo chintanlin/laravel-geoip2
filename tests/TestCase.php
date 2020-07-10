@@ -31,7 +31,7 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function testFacades()
     {
-        $Country = GeoIP2::getCountry('8.8.8.8');
+        $Country = GeoIP2::getCountry('216.160.83.56');
         $this->assertSame($Country, 'United States');
     }
 
@@ -40,7 +40,7 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function testProviders()
     {
-        $Country = app('geoip2')->getCountry('8.8.8.8');
+        $Country = app('geoip2')->getCountry('216.160.83.56');
         $this->assertSame($Country, 'United States');
     }
 
@@ -49,7 +49,7 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function testHelpers()
     {
-        $Country = geoip2('8.8.8.8');
+        $Country = geoip2('216.160.83.56');
         $this->assertSame($Country, 'United States');
     }
 
@@ -58,7 +58,7 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function testMaxmind()
     {
-        $record = GeoIP2::city('8.8.8.8');
+        $record = GeoIP2::city('216.160.83.56');
         $this->assertSame($record->country->name, 'United States');
     }
 }
