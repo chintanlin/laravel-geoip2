@@ -1,6 +1,8 @@
 # laravel-geoip2
-[![Latest Stable Version](https://poser.pugx.org/chintanlin/laravel-geoip2/v/stable.png)](https://packagist.org/packages/chintanlin/laravel-geoip2)
-[![Total Downloads](https://poser.pugx.org/chintanlin/laravel-geoip2/downloads.png)](https://packagist.org/packages/chintanlin/laravel-geoip2)
+[![Build Status](https://travis-ci.org/chintanlin/laravel-geoip2.svg)](https://travis-ci.org/chintanlin/laravel-geoip2)
+[![Latest Stable Version](https://poser.pugx.org/chintanlin/laravel-geoip2/v/stable.svg)](https://packagist.org/packages/chintanlin/laravel-geoip2)
+[![Total Downloads](https://poser.pugx.org/chintanlin/laravel-geoip2/d/total.svg)](https://packagist.org/packages/chintanlin/laravel-geoip2)
+[![License](https://poser.pugx.org/chintanlin/laravel-geoip2/license.svg)](https://packagist.org/packages/chintanlin/laravel-geoip2)
 
 GeoIP2 for Laravel
 
