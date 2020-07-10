@@ -1,5 +1,7 @@
 <?php
 
+use Chintanlin\GeoIP2\Facades\GeoIP2;
+
 class TestCase extends Orchestra\Testbench\TestCase
 {
     //
