@@ -1,5 +1,11 @@
 # laravel-geoip2
+[![Latest Stable Version](https://poser.pugx.org/chintanlin/laravel-geoip2/v/stable.png)](https://packagist.org/packages/chintanlin/laravel-geoip2)
+[![Total Downloads](https://poser.pugx.org/chintanlin/laravel-geoip2/downloads.png)](https://packagist.org/packages/chintanlin/laravel-geoip2)
+
 GeoIP2 for Laravel
+
+- [laravel-geoip2 on Packagist](https://packagist.org/packages/chintanlin/laravel-geoip2)
+- [laravel-geoip2 on GitHub](https://github.com/chintanlin/laravel-geoip2)
 
 ```bash
 composer require chintanlin/laravel-geoip2
